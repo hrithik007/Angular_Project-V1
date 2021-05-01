@@ -5,17 +5,17 @@
 
 
   <div fxFlex="40">
-    <mat-card *ngFor= " let leader of leaders">
+    <mat-card >
       <mat-card-header>
         <mat-card-title>
           <h2>Leader</h2>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src="{{leader.image}}">
-            <mat-card-title>{{leader.name}}</mat-card-title>
-            <mat-card-subtitle>{{leader.designation}}</mat-card-subtitle>
+      <img mat-card-image src="{{leaders1.image}}">
+            <mat-card-title>{{leaders1.name}}</mat-card-title>
+            <mat-card-subtitle>{{leaders1.designation}}</mat-card-subtitle>
       <mat-card-content>
-        <p style="color:rgb(7, 6, 6);">{{leader.description}}</p>
+        <p style="color:rgb(7, 6, 6);">{{leaders1.description}}</p>
       </mat-card-content>
   
     </mat-card>
