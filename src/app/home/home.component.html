@@ -1,11 +1,36 @@
+
 <div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
-  fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+  fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px">
 
+  <mat-card *ngIf="dish" fxFlex>
+    <mat-card-header>
+      <div mat-card-avatar></div>
+      <mat-card-title>
+        <h3>{{dish.name | uppercase}}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src={{dish.image}} alt={{dish.name}}>
+    <mat-card-content>
+      <p>{{dish.description}}
+      </p>
+    </mat-card-content>
+  </mat-card>
 
+  <mat-card *ngIf="promotion" fxFlex>
+    <mat-card-header>
+      <div mat-card-avatar></div>
+      <mat-card-title>
+        <h3>{{promotion.name | uppercase}}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src={{promotion.image}} alt={{promotion.name}}>
+    <mat-card-content>
+      <p>{{promotion.description}}
+      </p>
+    </mat-card-content>
+  </mat-card>
 
-
-  <div fxFlex="40">
-    <mat-card >
+    <mat-card  fxFlex="40">
       <mat-card-header>
         <mat-card-title>
           <h2>Leader</h2>
@@ -15,9 +40,13 @@
             <mat-card-title>{{leaders1.name}}</mat-card-title>
             <mat-card-subtitle>{{leaders1.designation}}</mat-card-subtitle>
       <mat-card-content>
-        <p style="color:rgb(7, 6, 6);">{{leaders1.description}}</p>
+        <p style="color:rgb(83, 44, 44);">{{leaders1.description}}</p>
       </mat-card-content>
   
     </mat-card>
+    <!-- <div fxFlex [hidden]="leader">
+      <mat-spinner></mat-spinner><h4>Loading...Please Wait!</h4>
+    </div> -->
+
 
   </div>
