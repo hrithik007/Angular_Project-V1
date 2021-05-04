@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Dish } from '../shared/dish';
 import { switchMap } from 'rxjs/operators';
 import { DishService } from '../services/dish.service';
 import { Params,ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import {FormBuilder, FormGroup,Validators} from '@angular/forms';
+import { Comment } from '../shared/dishComment';
 
 @Component({
   selector: 'app-dishdetail',
@@ -12,17 +14,47 @@ import { Location } from '@angular/common';
 })
 export class DishdetailComponent implements OnInit {
 
-
-
   dish: Dish;
   dishIds: string[];
   prev:string;
   next:string;
+  feedbackForm : FormGroup;
+  feedback:Comment;
+  d = new Date();
+  n = this.d.toISOString().substring(0, 10);
+  date=this.n;
+  
+
+  @ViewChild('fform') feedbackFormDirective;
+
+  formErrors = {
+    'author': '',
+    'comment': ''
+  };
+
+
+  validationMessages = {
+   'author': {
+      'required':' Name is required.',
+      'name': 'Enter the name',
+      'minlength':     ' Name must be at least 2 characters long.',
+      'maxlength':     'Name cannot be more than 50 characters long.'
+    
+      
+   
+     },
+    'comment':{
+      'required': 'commment is rerquired',
+       'comment': 'Enter a comment'
+    },
+  };
+
+
 
 
   constructor(private dishService: DishService,
     private route: ActivatedRoute,
-    private location: Location) { }
+    private location: Location, private fb: FormBuilder) { this.createForm();}
 
   ngOnInit() {
      this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
@@ -37,13 +69,53 @@ setPrevNext(dishId:string){
   
 }
 
-
-
-
 goBack(): void {
   this.location.back();
 }
 
+createForm() {
+    this.feedbackForm = this.fb.group({
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)] ],
+      comment:['',[Validators.required]],
+      rating:'',
+      date:this.date,
+    });
+    this.feedbackForm.valueChanges.subscribe(data => this.onValueChanged(data));
 
+    this.onValueChanged();
+
+  }
+onValueChanged(data?: any){
+  if (!this.feedbackForm) { return;}
+  const form = this.feedbackForm;
+  for(const field in this.formErrors){
+    if(this.formErrors.hasOwnProperty(field)){
+      // clear prev error mesage
+      this.formErrors[field]="";
+      const control = form.get(field);
+      if(control && control.dirty && !control.valid){
+        const message = this.validationMessages[field];
+        for(const key in control.errors){
+          if(control.errors.hasOwnProperty(key)){
+            this.formErrors[field] += message[key] + ' ';
+          }
+        }
+      }
+    }
+  }
+}
+  onSubmit(){
+    this.feedback = this.feedbackForm.value;
+    console.log(this.feedback);
+    this.dish.comments.push(this.feedback);
+    this.feedbackForm.reset();
+    this.feedbackFormDirective.resetForm({
+      author: '',
+      comment: '',
+      rating:'',
+      date:this.date,
+    });
+     
+  }
    
 }

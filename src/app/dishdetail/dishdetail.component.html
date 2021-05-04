@@ -9,7 +9,7 @@
 
 
 
-<div fxFlex="40">
+<div  fxFlex="30" >
   <mat-card *ngIf ="dish">
       <mat-card-header>
         <mat-card-title>
@@ -40,6 +40,7 @@
 
 
 <div fxFlex="40">
+  <div>
   <mat-list *ngIf="dish">
    <mat-list-item *ngFor = "let comment of dish.comments">
      <h4 matLine> {{comment.comment}}</h4>
@@ -49,14 +50,136 @@
          --{{comment.author}} {{comment.date | date}}
        </span>
      </p>
+      </mat-list-item>
+    </mat-list>
+  
+ 
+</div>
+  <div>
+    <mat-list >
+      <mat-list-item >
+        <h4 matLine> {{feedbackForm.value.comment | json}}</h4>
+        <p matLine2>{{ feedbackForm.value.rating | json}} Stars</p>
+        <p matLine>
+          <span>
+            --{{ feedbackForm.value.author | json }} {{feedbackForm.value.date | json }}
+          </span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+  
+  
+  </div>
 
-   </mat-list-item>
-  </mat-list>
+<div>
 
 </div>
-<div fxFlex [hidden]="dish">
+
+<div>
+
+  <h4>Comment</h4>
+  <form novalidate [formGroup]="feedbackForm"  #fform="ngForm" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field class="half-width">
+      
+        <input matInput formControlName="author" placeholder=" Name" type="text" required>
+        <mat-error *ngIf="formErrors.name">
+          {{ formErrors.author }}
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <table class="form-size">
+      <td>
+        <mat-slider thumbLabel formControlName="rating" [displayWith]="formatLabel" tickInterval="1" step="1" min="0" max="5" aria-label="units">
+        </mat-slider>
+      </td>
+    </table>
+    <p>
+      <mat-form-field class="full-width">
+        <textarea matInput formControlName="comment" placeholder="Your Comment" rows=10></textarea>
+                <mat-error *ngIf="formErrors.comment">
+                  {{ formErrors.comment }}
+                </mat-error>
+      </mat-form-field>
+    </p>
+    <button type="submit" [disabled]="feedbackForm.invalid" mat-button class="background-primary text-floral-white"
+      [disabled]="">Submit</button>
+  </form>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div fxFlex="40"  class="form-size">
+
+  <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
+
+  <form novalidate [formGroup]="Comment" #fform="ngForm" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field class="half-width">
+        <input matInput formControlName="name" placeholder=" Name" type="text" required>
+        <mat-error *ngIf="formErrors.firstname">
+         
+        </mat-error>
+      </mat-form-field>
+
+    </p>
+    <p>
+
+    </p>
+    <table class="form-size">
+      <td>
+        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" step="1" min="0" max="5"
+          aria-label="units"></mat-slider>
+      </td>
+    </table>
+    <p>
+      <mat-form-field class="full-width">
+        <textarea matInput formControlName="message" placeholder="Your Comment" rows=6></textarea>
+      </mat-form-field>
+    </p>
+    <button type="submit" mat-button class="background-primary text-floral-white"
+      [disabled]="feedbackForm.invalid">Submit</button>
+  </form>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div fxFlex [hidden]="dish">
   <mat-spinner></mat-spinner><h4>Loading ...Please Wait!</h4>
-</div>
+</div> -->
 
 
 </div>

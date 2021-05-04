@@ -35,6 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule} from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { PromotionService } from './services/promotion.service';
+import { MatSliderModule } from '@angular/material/slider'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { PromotionService } from './services/promotion.service';
     MatSelectModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    MatSliderModule
   ],
   entryComponents: [
       LoginComponent
