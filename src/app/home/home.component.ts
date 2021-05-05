@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Leader} from '../shared/Leaders';
 import { LeaderService } from '../services/leader.service';
 import {leader1} from '../services/leader1';
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
 
     dish:Dish;
+    dishErrMess:string;
     promotion: Promotion;
   
 
@@ -33,11 +34,13 @@ export class HomeComponent implements OnInit {
       description: 'Award winning three-star Michelin chef with wide International experience having worked closely with whos-who in the culinary world, he specializes in creating mouthwatering Indo-Italian fusion experiences. He says, Put together the cuisines from the two craziest cultures, and you get a winning hit! Amma Mia!'
     };
   
-  constructor(private dishServices: DishService , private promotionService: PromotionService,private leaderService: LeaderService) { 
-  }
+  constructor(private dishServices: DishService , private promotionService: PromotionService,private leaderService: LeaderService,
+    @Inject('BaseURL') private BaseURL) {}
 
   ngOnInit() {
-  this.dish = this.dishServices.getFeaturedDish(); 
+  this.dishServices.getFeaturedDish()
+  .subscribe(dish => this.dish =dish);
+  //   errmess => this.dishErrMess = <any>errmess ); 
   this.promotion = this.promotionService.getFeaturedPromotion(); 
   this.leaderService.getLeaders().subscribe(leader => this.leaders = leader);
 

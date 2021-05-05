@@ -16,7 +16,7 @@
           <h3>{{dish.name | uppercase }}</h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src="{{dish.image}}">
+      <img mat-card-image src="{{BaseURL + dish.image}}">
       
       <mat-card-content>
         <p style="color:rgb(7, 6, 6);">{{dish.description}}</p>
@@ -122,64 +122,19 @@
 
 
 
-<!-- <div fxFlex="40"  class="form-size">
-
-  <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
-  <form novalidate [formGroup]="Comment" #fform="ngForm" (ngSubmit)="onSubmit()">
-    <p>
-      <mat-form-field class="half-width">
-        <input matInput formControlName="name" placeholder=" Name" type="text" required>
-        <mat-error *ngIf="formErrors.firstname">
-         
-        </mat-error>
-      </mat-form-field>
-
-    </p>
-    <p>
-
-    </p>
-    <table class="form-size">
-      <td>
-        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" step="1" min="0" max="5"
-          aria-label="units"></mat-slider>
-      </td>
-    </table>
-    <p>
-      <mat-form-field class="full-width">
-        <textarea matInput formControlName="message" placeholder="Your Comment" rows=6></textarea>
-      </mat-form-field>
-    </p>
-    <button type="submit" mat-button class="background-primary text-floral-white"
-      [disabled]="feedbackForm.invalid">Submit</button>
-  </form>
-</div> -->
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div fxFlex [hidden]="dish">
+<div fxFlex [hidden]="dish || errMess">
   <mat-spinner></mat-spinner><h4>Loading ...Please Wait!</h4>
-</div> -->
+</div>
+
+<div fxFlex *ngIf="errMess">
+  <h2>Error</h2>
+  <h4>{{errMess}}</h4>
+</div>
+
 
 
 </div>
